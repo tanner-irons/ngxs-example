@@ -10,6 +10,5 @@ export class AppComponent implements OnInit {
   title = 'ngxs-example';
 
   ngOnInit(): void {
-    localStorage.setItem('favoriteMovies', JSON.stringify(favorites));
   }
 }

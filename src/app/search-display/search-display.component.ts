@@ -1,31 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieSummary } from '../movie-service/movie.model';
+import { FavoritesService } from '../favoritesService/favorites.service';
 
 @Component({
   selector: 'app-search-display',
   templateUrl: './search-display.component.html',
   styleUrls: ['./search-display.component.scss']
 })
-export class SearchDisplayComponent implements OnInit {
-
+export class SearchDisplayComponent {
   public movieList: MovieSummary[] = [];
-
   public movieError: string;
 
-  constructor() { }
+  constructor(private favoritesService: FavoritesService) { }
 
-  ngOnInit() {
+  onMovieFavorited(movie: MovieSummary) {
+    this.favoritesService.newFavorite(movie.imdbID);
   }
 
   updateMovieList(newList: MovieSummary[]) {
-    console.log(newList);
     this.movieError = null;
     this.movieList = newList;
   }
 
   updateError(newError: string) {
-    console.log(newError);
     this.movieError = newError;
   }
-
 }
