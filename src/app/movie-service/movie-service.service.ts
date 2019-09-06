@@ -18,10 +18,12 @@ export class MovieServiceService {
       .toPromise()
       .then(result => {
         let typedResponse = result as MovieSearchResult;
-        if (typedResponse.response === 'True') {
-          return typedResponse.search;
+        if (typedResponse.Response === 'True') {
+          return typedResponse.Search;
         } else {
-          throw 'no movies found';
+          throw {
+            error: typedResponse.Error
+          };
         }
       });
   }
@@ -37,8 +39,8 @@ export class MovieServiceService {
 }
 
 interface MovieSearchResult {
-  search?: MovieSummary[],
+  Search?: MovieSummary[],
   totalResults?: string,
-  response: 'False' | 'True',
-  error?: string
+  Response: 'False' | 'True',
+  Error?: string
 }

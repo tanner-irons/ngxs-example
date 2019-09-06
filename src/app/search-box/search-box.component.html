@@ -1,3 +1,5 @@
 <p>
-  search-box works!
+  <mat-form-field>
+    <input [(ngModel)]="searchText" (keyup)="searchChanged()" matInput placeholder="Search">
+  </mat-form-field>
 </p>

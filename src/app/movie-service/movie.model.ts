@@ -27,9 +27,9 @@ export interface MovieDetails {
 }
 
 export interface MovieSummary {
-  title: string,
-  year: string,
+  Title: string,
+  Year: string,
   imdbID: string,
-  type: 'movie' | 'series' | 'episode',
-  poster: string
+  Type: 'movie' | 'series' | 'episode',
+  Poster: string
 }
