@@ -9,6 +9,8 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { MovieCardDisplayComponent } from './movie-card-display/movie-card-display.component';
 import { FavoriteDisplayComponent } from './favorite-display/favorite-display.component';
 import { FilterSelectComponent } from './filter-select/filter-select.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { FilterSelectComponent } from './filter-select/filter-select.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
