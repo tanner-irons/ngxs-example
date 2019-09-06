@@ -1,0 +1,9 @@
+.favorite-display {
+  display: flex;
+
+  .card {
+    max-width: 275px;
+    flex-grow: 1;
+    margin: 10px;
+  }
+}

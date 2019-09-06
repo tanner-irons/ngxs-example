@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { MovieDetails } from '../movie-service/movie.model';
 
 @Component({
   selector: 'app-filter-select',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilterSelectComponent implements OnInit {
 
+  @Input() movies: MovieDetails[];
   constructor() { }
 
   ngOnInit() {

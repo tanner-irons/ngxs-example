@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MovieDetails } from '../movie-service/movie.model';
 
 @Component({
   selector: 'app-favorite-display',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FavoriteDisplayComponent implements OnInit {
 
+  public favorites: MovieDetails[];
+
   constructor() { }
 
   ngOnInit() {
+    this.favorites = JSON.parse(localStorage.getItem('favoriteMovies'));
   }
 
 }
