@@ -4,7 +4,7 @@ export interface MovieDetails {
   rated: string
   released: string
   runtime: string
-  genre: string
+  Genre: string
   director: string
   writer: string
   actors: string

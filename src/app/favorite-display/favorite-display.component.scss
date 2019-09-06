@@ -1,9 +1,15 @@
 .favorite-display {
-  display: flex;
+  .cards {
+    display: flex;
 
-  .card {
-    max-width: 275px;
-    flex-grow: 1;
-    margin: 10px;
+    .card {
+      max-width: 275px;
+      flex-grow: 1;
+      margin: 10px;
+
+      .mat-card-title {
+        min-height: 60px;
+      }
+    }
   }
 }

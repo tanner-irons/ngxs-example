@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { MovieDetails } from '../movie-service/movie.model';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-filter-select',
@@ -8,10 +9,15 @@ import { MovieDetails } from '../movie-service/movie.model';
 })
 export class FilterSelectComponent implements OnInit {
 
-  @Input() movies: MovieDetails[];
+  @Output() filterChange: EventEmitter<string> = new EventEmitter<string>();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public selectionChange(selection: MatSelectChange) {
+    this.filterChange.emit(selection.value);
   }
 
 }
