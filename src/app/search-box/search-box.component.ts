@@ -29,17 +29,14 @@ export class SearchBoxComponent implements OnInit {
   }
 
   updateMovieList(searchText: string) {
-    console.log("updated movie list: " + searchText);
     this.movieService.searchForMovie(searchText)
       .then(movies => {
         this.movieList = movies;
         this.moviesChanged.emit(this.movieList);
-        console.log(movies);
       })
       .catch(err => {
         this.movieList = [];
         this.movieError.emit(err.error ? err.error : "unknown error");
-        console.log(err);
       });
   }
 }

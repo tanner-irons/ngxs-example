@@ -1,9 +1,19 @@
 <div>
   <div class="search-box">
-    <app-search-box></app-search-box>
+    <app-search-box (moviesChanged)="updateMovieList($event)" (movieError)="updateError($event)"></app-search-box>
   </div>
-  <div class="movie-list">
-
+  <div class="error-message" *ngIf="movieError; else movieListTemplate">
+    {{movieError}}
   </div>
-  Search display is here bois
+  <ng-template #movieListTemplate class="movie-list">
+    <mat-list>
+      <mat-list-item *ngFor="let movie of movieList">
+        <h3 matLine> {{movie.Title}} </h3>
+        <p matLine>
+          <span> {{movie.Year}} </span>
+          <span> -- {{movie.Type}} </span>
+        </p>
+      </mat-list-item>
+    </mat-list>
+  </ng-template>
 </div>
