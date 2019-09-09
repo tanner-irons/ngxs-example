@@ -17,6 +17,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 
+import { NgxsModule } from '@ngxs/store';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +39,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatListModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    NgxsModule.forRoot([], {
+      developmentMode: true
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
