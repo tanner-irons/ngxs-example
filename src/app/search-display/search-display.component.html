@@ -1,13 +1,16 @@
 <div class="search-display">
+  <p>
+    Search for a movie by title:
+  </p>
   <div class="search-box">
     <app-search-box></app-search-box>
   </div>
-  <div class="error-message" *ngIf="movieError; else movieListTemplate">
+  <div class="error-message" *ngIf="(movieError$ | async) as movieError; else movieListTemplate">
     {{movieError}}
   </div>
   <ng-template #movieListTemplate>
     <div class="cards">
-      <mat-card *ngFor="let movie of movieList">
+      <mat-card *ngFor="let movie of (movieList$ | async)">
         <mat-card-header>
           <mat-card-title>
             {{movie.Title}}

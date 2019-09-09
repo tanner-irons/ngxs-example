@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 
 import { NgxsModule } from '@ngxs/store';
+import { MovieSearchState } from './movie-store/states/movie-search.state';
 
 @NgModule({
   declarations: [
@@ -40,8 +41,10 @@ import { NgxsModule } from '@ngxs/store';
     MatListModule,
     MatCardModule,
     MatSelectModule,
-    NgxsModule.forRoot([], {
-      developmentMode: true
+    NgxsModule.forRoot([
+      MovieSearchState
+    ], {
+      developmentMode: true //freeze the state of objects in the store
     })
   ],
   providers: [],

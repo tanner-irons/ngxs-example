@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MovieSummary } from '../movie-service/movie.model';
 import { FavoritesService } from '../favorites-service/favorites.service';
-import { MovieUpdatesService } from '../movie-service/movie-updates.service';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
+import { Select } from '@ngxs/store';
+import { MovieSearchState } from '../movie-store/states/movie-search.state';
 
 @AutoUnsubscribe()
 @Component({
@@ -14,19 +15,12 @@ import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 export class SearchDisplayComponent {
   public movieList: MovieSummary[] = [];
   public movieError: string;
-  private updateSubscribtion: Subscription;
+
+  @Select(MovieSearchState.getMovieList) public movieList$: Observable<MovieSummary[]>;
+  @Select(MovieSearchState.getMovieError) public movieError$: Observable<string>;
 
   constructor(
-    private favoritesService: FavoritesService,
-    private updateService: MovieUpdatesService) {
-    this.updateSubscribtion = this.updateService.searchResults.subscribe(summaries => {
-      if (summaries) {
-        this.movieError = null;
-        this.movieList = summaries;
-      } else {
-        this.movieError = "Error getting movies";
-      }
-    });
+    private favoritesService: FavoritesService) {
   }
 
   onMovieFavorited(movie: MovieSummary) {
