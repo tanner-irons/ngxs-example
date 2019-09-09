@@ -26,11 +26,13 @@ export class SearchBoxComponent {
 
   updateMovieList(searchText: string) {
     this.movieService.searchForMovie(searchText)
-      .then(movies => {
-        this.updateService.searchResults.next(movies);
-      })
-      .catch(err => {
-        this.updateService.searchResults.next(null);
-      });
+      .subscribe(
+        movies => {
+          this.updateService.searchResults.next(movies);
+        },
+        error => {
+          this.updateService.searchResults.next(null);
+        }
+      );
   }
 }

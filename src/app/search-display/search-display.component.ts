@@ -3,7 +3,9 @@ import { MovieSummary } from '../movie-service/movie.model';
 import { FavoritesService } from '../favorites-service/favorites.service';
 import { MovieUpdatesService } from '../movie-service/movie-updates.service';
 import { Subscription } from 'rxjs';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-search-display',
   templateUrl: './search-display.component.html',
@@ -22,12 +24,16 @@ export class SearchDisplayComponent {
         this.movieError = null;
         this.movieList = summaries;
       } else {
-        this.movieError = "No Movies Found";
+        this.movieError = "Error getting movies";
       }
     });
   }
 
   onMovieFavorited(movie: MovieSummary) {
     this.favoritesService.newFavorite(movie.imdbID);
+  }
+
+  ngOnDestroy() {
+    // This must be implemented when using Auto-Unsubscribe even if you don't actually do anything here.
   }
 }

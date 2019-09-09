@@ -14,20 +14,21 @@ export class MovieService {
 
   constructor(private http: HttpClient) { }
 
-  public searchForMovie(searchTerm: string): Promise<MovieSummary[]> {
+  public searchForMovie(searchTerm: string): Observable<MovieSummary[]> {
     return this.http
       .get(MovieService.API_BASE + `&s=${searchTerm}`)
-      .toPromise()
-      .then(result => {
-        let typedResponse = result as MovieSearchResult;
-        if (typedResponse.Response === 'True') {
-          return typedResponse.Search;
-        } else {
-          throw {
-            error: typedResponse.Error
-          };
-        }
-      });
+      .pipe(
+        map(result => {
+          let typedResponse = result as MovieSearchResult;
+          if (typedResponse.Response === 'True') {
+            return typedResponse.Search;
+          } else {
+            throw {
+              error: typedResponse.Error
+            };
+          }
+        })
+      );
   }
 
   public getMovieByID(id: string): Observable<MovieDetails> {
