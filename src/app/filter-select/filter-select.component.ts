@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { MovieDetails } from '../movie-service/movie.model';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
+import { FavoritesService } from '../favorites-service/favorites.service';
 
 @Component({
   selector: 'app-filter-select',
@@ -13,13 +13,15 @@ export class FilterSelectComponent implements OnInit {
 
   public selected = 'all';
 
-  constructor() { }
+  constructor(
+    private favoritesService: FavoritesService
+  ) { }
 
   ngOnInit() {
   }
 
   public selectionChange(selection: MatSelectChange) {
-    this.filterChange.emit(selection.value);
+    this.favoritesService.setFilter(selection.value);
   }
 
 }

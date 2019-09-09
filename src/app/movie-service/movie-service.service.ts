@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MovieSummary, MovieDetails } from './movie.model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -28,13 +30,12 @@ export class MovieService {
       });
   }
 
-  public getMovieByID(id: string): Promise<MovieDetails> {
+  public getMovieByID(id: string): Observable<MovieDetails> {
     return this.http
       .get(MovieService.API_BASE + `&i=${id}`)
-      .toPromise()
-      .then(result => {
+      .pipe(map(result => {
         return result as MovieDetails;
-      });
+      }));
   }
 }
 

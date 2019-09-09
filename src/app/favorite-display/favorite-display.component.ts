@@ -21,13 +21,15 @@ export class FavoriteDisplayComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // We set our subscription equal to a declared member so that @ngx-auto-unsubscribe knows to unsubscribe
-    this.favoriteMovieSubscription = this.favoriteService.favoriteMovies.subscribe(favs => {
-      if (favs) {
-        this.favorites = favs;
-        this.visibleFavorites = this.favorites;
-      }
-    });
+    /* We set our subscription equal to a class member of type Subscription so
+    that @ngx-auto-unsubscribe knows to unsubscribe when the component is destroyed. */
+    this.favoriteMovieSubscription = this.favoriteService.favoriteMovies
+      .subscribe(favs => {
+        if (favs) {
+          this.favorites = favs;
+          this.visibleFavorites = this.favorites;
+        }
+      });
   }
 
   filterChange(filterSelection: string) {
