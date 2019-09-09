@@ -13,12 +13,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxsModule } from '@ngxs/store';
 import { MovieSearchState } from './movie-store/states/movie-search.state';
+import { NgxsStoragePluginModule, StorageOption } from '@ngxs/storage-plugin';
+import { FavoritesState } from './favorite-store/states/favorites.state';
 
 @NgModule({
   declarations: [
@@ -38,13 +39,18 @@ import { MovieSearchState } from './movie-store/states/movie-search.state';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
-    MatListModule,
     MatCardModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     NgxsModule.forRoot([
-      MovieSearchState
+      MovieSearchState,
+      FavoritesState
     ], {
       developmentMode: true //freeze the state of objects in the store
+    }),
+    NgxsStoragePluginModule.forRoot({
+      key: ['favorites.movieIds'],
+      storage: StorageOption.LocalStorage,
     })
   ],
   providers: [],

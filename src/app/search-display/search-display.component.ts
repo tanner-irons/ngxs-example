@@ -3,8 +3,9 @@ import { MovieSummary } from '../movie-service/movie.model';
 import { FavoritesService } from '../favorites-service/favorites.service';
 import { Observable } from 'rxjs';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { MovieSearchState } from '../movie-store/states/movie-search.state';
+import { AddFavoriteMovie } from '../favorite-store/actions/favorites.actions';
 
 @AutoUnsubscribe()
 @Component({
@@ -20,11 +21,11 @@ export class SearchDisplayComponent {
   @Select(MovieSearchState.getMovieError) public movieError$: Observable<string>;
 
   constructor(
-    private favoritesService: FavoritesService) {
-  }
+    private store: Store
+  ) { }
 
   onMovieFavorited(movie: MovieSummary) {
-    this.favoritesService.newFavorite(movie.imdbID);
+    this.store.dispatch(new AddFavoriteMovie(movie.imdbID));
   }
 
   ngOnDestroy() {

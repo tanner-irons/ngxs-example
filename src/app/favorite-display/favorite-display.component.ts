@@ -1,38 +1,14 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { MovieDetails } from '../movie-service/movie.model';
-import { FavoritesService } from '../favorites-service/favorites.service';
-import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Select } from '@ngxs/store';
+import { FavoritesState } from '../favorite-store/states/favorites.state';
 
-@AutoUnsubscribe()
 @Component({
     selector: 'app-favorite-display',
     templateUrl: './favorite-display.component.html',
     styleUrls: ['./favorite-display.component.scss']
 })
-export class FavoriteDisplayComponent implements OnInit {
-
-  public favorites: MovieDetails[];
-  public visibleFavorites: MovieDetails[];
-  private favoriteMovieSubscription: Subscription;
-
-  constructor(
-    private favoriteService: FavoritesService
-  ) { }
-
-  ngOnInit() {
-    /* We set our subscription equal to a class member of type Subscription so
-    that @ngx-auto-unsubscribe knows to unsubscribe when the component is destroyed. */
-    this.favoriteMovieSubscription = this.favoriteService.favoriteMovies
-      .subscribe(favs => {
-        if (favs) {
-          this.favorites = favs;
-          this.visibleFavorites = this.favorites;
-        }
-      });
-  }
-
-  ngOnDestroy() {
-    // This must be implemented when using Auto-Unsubscribe even if you don't actually do anything here.
-  }
+export class FavoriteDisplayComponent {
+  @Select(FavoritesState.getFilteredMovies) favoriteMovies$: Observable<MovieDetails[]>;
 }

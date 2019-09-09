@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { FavoritesService } from '../favorites-service/favorites.service';
+import { Store } from '@ngxs/store';
+import { SetGenreFilter } from '../favorite-store/actions/favorites.actions';
 
 @Component({
   selector: 'app-filter-select',
@@ -12,14 +14,14 @@ export class FilterSelectComponent implements OnInit {
   public selected = 'all';
 
   constructor(
-    private favoritesService: FavoritesService
+    private store: Store
   ) { }
 
   ngOnInit() {
   }
 
   public selectionChange(selection: MatSelectChange) {
-    this.favoritesService.genreFilter.next(selection.value);
+    this.store.dispatch(new SetGenreFilter(selection.value));
   }
 
 }

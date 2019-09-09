@@ -3,8 +3,8 @@
     <app-filter-select></app-filter-select>
   </div>
   <div class="cards">
-    <ng-container *ngIf="visibleFavorites; else noFavorites">
-      <mat-card *ngFor="let favorite of visibleFavorites">
+    <ng-container *ngIf="(favoriteMovies$ | async) as favorites">
+      <mat-card *ngFor="let favorite of favorites">
         <mat-card-header>
           <mat-card-title>
             {{favorite.Title}}
@@ -17,8 +17,5 @@
         </mat-card-content>
       </mat-card>
     </ng-container>
-    <ng-template #noFavorites>
-      <div class="no-favorites">You have no favorites.</div>
-    </ng-template>
   </div>
 </div>
