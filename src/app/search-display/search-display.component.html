@@ -1,6 +1,6 @@
 <div class="search-display">
   <div class="search-box">
-    <app-search-box (moviesChanged)="updateMovieList($event)" (movieError)="updateError($event)"></app-search-box>
+    <app-search-box></app-search-box>
   </div>
   <div class="error-message" *ngIf="movieError; else movieListTemplate">
     {{movieError}}

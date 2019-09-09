@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { MovieSummary } from '../movie-service/movie.model';
 import { MovieServiceService } from '../movie-service/movie-service.service';
+import { MovieUpdatesService } from '../movie-service/movie-updates.service';
 
 @Component({
   selector: 'app-search-box',
@@ -9,10 +10,10 @@ import { MovieServiceService } from '../movie-service/movie-service.service';
 })
 export class SearchBoxComponent {
   public searchText: string = "";
-  @Output() moviesChanged: EventEmitter<MovieSummary[]> = new EventEmitter();
-  @Output() movieError: EventEmitter<string> = new EventEmitter();
 
-  constructor(private movieService: MovieServiceService) { }
+  constructor(
+    private movieService: MovieServiceService,
+    private updateService: MovieUpdatesService) { }
 
   private lastChangeID: number;
   searchChanged() {
@@ -25,10 +26,10 @@ export class SearchBoxComponent {
   updateMovieList(searchText: string) {
     this.movieService.searchForMovie(searchText)
       .then(movies => {
-        this.moviesChanged.emit(movies);
+        this.updateService.searchResults.next(movies);
       })
       .catch(err => {
-        this.movieError.emit(err.error ? err.error : "unknown error");
+        this.updateService.searchResults.next(null);
       });
   }
 }

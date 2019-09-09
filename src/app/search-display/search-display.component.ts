@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieSummary } from '../movie-service/movie.model';
-import { FavoritesService } from '../favoritesService/favorites.service';
+import { FavoritesService } from '../favorites-service/favorites.service';
+import { MovieUpdatesService } from '../movie-service/movie-updates.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search-display',
@@ -10,19 +12,22 @@ import { FavoritesService } from '../favoritesService/favorites.service';
 export class SearchDisplayComponent {
   public movieList: MovieSummary[] = [];
   public movieError: string;
+  private updateSubscribtion: Subscription;
 
-  constructor(private favoritesService: FavoritesService) { }
+  constructor(
+    private favoritesService: FavoritesService,
+    private updateService: MovieUpdatesService) {
+    this.updateSubscribtion = this.updateService.searchResults.subscribe(summaries => {
+      if (summaries) {
+        this.movieError = null;
+        this.movieList = summaries;
+      } else {
+        this.movieError = "No Movies Found";
+      }
+    });
+  }
 
   onMovieFavorited(movie: MovieSummary) {
     this.favoritesService.newFavorite(movie.imdbID);
-  }
-
-  updateMovieList(newList: MovieSummary[]) {
-    this.movieError = null;
-    this.movieList = newList;
-  }
-
-  updateError(newError: string) {
-    this.movieError = newError;
   }
 }
