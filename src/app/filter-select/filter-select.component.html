@@ -1,7 +1,8 @@
 <h4>Filter By Genre</h4>
 <mat-form-field>
   <mat-label>Genres</mat-label>
-  <mat-select matNativeControl required (selectionChange)="selectionChange($event)">
+  <mat-select matNativeControl required [(value)]="selected" (selectionChange)="selectionChange($event)">
+    <mat-option value="all">All</mat-option>
     <mat-option value="comedy">Comedy</mat-option>
     <mat-option value="drama">Drama</mat-option>
     <mat-option value="fantasy">Fantasy</mat-option>

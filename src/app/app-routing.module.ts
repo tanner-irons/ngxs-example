@@ -4,6 +4,7 @@ import { SearchDisplayComponent } from './search-display/search-display.componen
 import { FavoriteDisplayComponent } from './favorite-display/favorite-display.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: SearchDisplayComponent },
   { path: 'favorites', component: FavoriteDisplayComponent }
 ];

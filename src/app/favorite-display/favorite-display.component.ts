@@ -21,6 +21,10 @@ export class FavoriteDisplayComponent implements OnInit {
     }
 
     filterChange(filterSelection: string) {
+        if (filterSelection === 'all') {
+            this.visibleFavorites = this.favorites;
+            return;
+        }
         this.visibleFavorites = this.favorites.filter(x => {
             let genres = x.Genre.split(',');
             for (let i = 0; i < genres.length; i++) {

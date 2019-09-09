@@ -1,5 +1,15 @@
 .search-display {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+
+    .mat-card {
+      width: 10%;
+      margin: 10px;
+
+      .mat-raised-button {
+        margin: 5px;
+      }
+    }
+  }
 }

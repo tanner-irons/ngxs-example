@@ -11,6 +11,8 @@ export class FilterSelectComponent implements OnInit {
 
   @Output() filterChange: EventEmitter<string> = new EventEmitter<string>();
 
+  public selected = 'all';
+
   constructor() { }
 
   ngOnInit() {

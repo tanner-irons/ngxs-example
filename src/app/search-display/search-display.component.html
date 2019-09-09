@@ -6,17 +6,22 @@
     {{movieError}}
   </div>
   <ng-template #movieListTemplate>
-    <mat-list class="movie-list">
-      <mat-list-item *ngFor="let movie of movieList">
-        <h3 matLine> {{movie.Title}} </h3>
-        <p matLine>
-          <span> {{movie.Year}} </span>
-          <span> -- {{movie.Type}} </span>
-        </p>
-        <button mat-button (click)="onMovieFavorited(movie)">
-          Favorite
-        </button>
-      </mat-list-item>
-    </mat-list>
+    <div class="cards">
+      <mat-card *ngFor="let movie of movieList">
+        <mat-card-header>
+          <mat-card-title>
+            {{movie.Title}}
+          </mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="movie.Poster" />
+        <mat-card-content>
+          <div>{{movie.Type}}</div>
+          <div>{{movie.Year}}</div>
+          <button mat-raised-button (click)="onMovieFavorited(movie)">
+            Add To Favorites
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </ng-template>
 </div>
