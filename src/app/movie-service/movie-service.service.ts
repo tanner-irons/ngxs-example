@@ -5,16 +5,16 @@ import { MovieSummary, MovieDetails } from './movie.model';
 @Injectable({
   providedIn: 'root'
 })
-export class MovieServiceService {
+export class MovieService {
 
   private static API_KEY: string = "3c11f8fd";
-  private static API_BASE: string = `http://www.omdbapi.com/?apikey=${MovieServiceService.API_KEY}`;
+  private static API_BASE: string = `http://www.omdbapi.com/?apikey=${MovieService.API_KEY}`;
 
   constructor(private http: HttpClient) { }
 
   public searchForMovie(searchTerm: string): Promise<MovieSummary[]> {
     return this.http
-      .get(MovieServiceService.API_BASE + `&s=${searchTerm}`)
+      .get(MovieService.API_BASE + `&s=${searchTerm}`)
       .toPromise()
       .then(result => {
         let typedResponse = result as MovieSearchResult;
@@ -30,7 +30,7 @@ export class MovieServiceService {
 
   public getMovieByID(id: string): Promise<MovieDetails> {
     return this.http
-      .get(MovieServiceService.API_BASE + `&i=${id}`)
+      .get(MovieService.API_BASE + `&i=${id}`)
       .toPromise()
       .then(result => {
         return result as MovieDetails;

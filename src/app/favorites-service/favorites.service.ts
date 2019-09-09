@@ -1,35 +1,41 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
+import { MovieDetails } from '../movie-service/movie.model';
+import { MovieService } from '../movie-service/movie-service.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavoritesService {
 
-  private favoriteIds: Set<string> = new Set();
+  private favoriteIds: Set<string>;
+  public favoriteMovies: BehaviorSubject<MovieDetails[]> = new BehaviorSubject<MovieDetails[]>(null);
 
-  private favoritesListeners: ((favs: string[]) => void)[];
-
-  constructor() {
-    this.favoritesListeners = [];
-    let favoriteIDList: string[] = JSON.parse(localStorage.getItem('favoriteMovieIds'));
-    this.favoriteIds = new Set(favoriteIDList);
+  constructor(
+    private movieService: MovieService
+  ) {
+    this.favoriteIds = new Set(JSON.parse(localStorage.getItem('favoriteMovieIds')));
+    this.getFavoriteMovies(Array.from(this.favoriteIds.values())).then(favs => {
+      this.favoriteMovies.next(favs);
+    });
   }
 
   public newFavorite(id: string) {
     this.favoriteIds.add(id);
     let tmpArray = Array.from(this.favoriteIds.values());
     localStorage.setItem('favoriteMovieIds', JSON.stringify(tmpArray));
-    for (let listener of this.favoritesListeners) {
-      listener(tmpArray);
+    this.getFavoriteMovies(tmpArray).then(favs => {
+      this.favoriteMovies.next(favs);
+    });
+  }
+
+  private getFavoriteMovies(favoriteIds: string[]): Promise<MovieDetails[]> {
+    let requestList: Promise<MovieDetails>[] = [];
+    for (let id of favoriteIds) {
+      requestList.push(
+        this.movieService.getMovieByID(id)
+      );
     }
-  }
-
-  public getFavorites(): Set<string> {
-    return this.favoriteIds;
-  }
-
-  public whenFavoritesChanged(listener: ((favs: string[]) => void)) {
-    this.favoritesListeners.push(listener);
-    listener(Array.from(this.favoriteIds.values()));
+    return Promise.all(requestList);
   }
 }

@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { MovieSummary } from '../movie-service/movie.model';
-import { MovieServiceService } from '../movie-service/movie-service.service';
 import { MovieUpdatesService } from '../movie-service/movie-updates.service';
+import { MovieService } from '../movie-service/movie-service.service';
 
 @Component({
   selector: 'app-search-box',
@@ -12,8 +12,9 @@ export class SearchBoxComponent {
   public searchText: string = "";
 
   constructor(
-    private movieService: MovieServiceService,
-    private updateService: MovieUpdatesService) { }
+    private movieService: MovieService,
+    private updateService: MovieUpdatesService
+  ) { }
 
   private lastChangeID: number;
   searchChanged() {

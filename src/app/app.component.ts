@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import favorites from './favorite-display/favorites.json';
 
 @Component({
   selector: 'app-root',
