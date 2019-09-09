@@ -11,13 +11,28 @@ export class FavoritesService {
 
   private favoriteIds: Set<string>;
   public favoriteMovies: BehaviorSubject<MovieDetails[]> = new BehaviorSubject<MovieDetails[]>(null);
+  public genreFilter: BehaviorSubject<string> = new BehaviorSubject<string>('all');
 
   constructor(
     private movieService: MovieService
   ) {
+    // get favorites from local storage and emit
     this.favoriteIds = new Set(JSON.parse(localStorage.getItem('favoriteMovieIds')));
     this.getFavoriteMovies(Array.from(this.favoriteIds.values())).subscribe(favs => {
       this.favoriteMovies.next(favs);
+    });
+    // if there is a filter, filter and emit
+    this.genreFilter.subscribe(filter => {
+      this.getFavoriteMovies(Array.from(this.favoriteIds))
+        .pipe(map(x => x.filter(y => {
+          if (filter !== 'all') {
+            return y.Genre.split(',').some(z => z.toLowerCase().trim() === filter)
+          }
+          return y;
+        })))
+        .subscribe(favs => {
+          this.favoriteMovies.next(favs);
+        });
     });
   }
 
@@ -30,19 +45,6 @@ export class FavoritesService {
     });
   }
 
-  public setFilter(filter: string) {
-    this.getFavoriteMovies(Array.from(this.favoriteIds))
-      .pipe(map(x => x.filter(y => {
-        if (filter !== 'all') {
-          return y.Genre.split(',').some(z => z.toLowerCase().trim() === filter)
-        }
-        return y;
-      })))
-      .subscribe(favs => {
-        this.favoriteMovies.next(favs);
-      });
-  }
-
   private getFavoriteMovies(favoriteIds: string[]): Observable<MovieDetails[]> {
     let requestList: Observable<MovieDetails>[] = [];
     for (let id of favoriteIds) {
@@ -52,5 +54,4 @@ export class FavoritesService {
     }
     return forkJoin(requestList);
   }
-
 }

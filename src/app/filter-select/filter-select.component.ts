@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { FavoritesService } from '../favorites-service/favorites.service';
 
@@ -8,8 +8,6 @@ import { FavoritesService } from '../favorites-service/favorites.service';
   styleUrls: ['./filter-select.component.scss']
 })
 export class FilterSelectComponent implements OnInit {
-
-  @Output() filterChange: EventEmitter<string> = new EventEmitter<string>();
 
   public selected = 'all';
 
@@ -21,7 +19,7 @@ export class FilterSelectComponent implements OnInit {
   }
 
   public selectionChange(selection: MatSelectChange) {
-    this.favoritesService.setFilter(selection.value);
+    this.favoritesService.genreFilter.next(selection.value);
   }
 
 }

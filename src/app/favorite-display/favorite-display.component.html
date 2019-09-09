@@ -1,6 +1,6 @@
 <div class="favorite-display">
   <div class="filter">
-    <app-filter-select (filterChange)="filterChange($event)"></app-filter-select>
+    <app-filter-select></app-filter-select>
   </div>
   <div class="cards">
     <ng-container *ngIf="visibleFavorites; else noFavorites">
