@@ -1,23 +1,27 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { MovieDetails } from '../movie-service/movie.model';
-import { MatSelectChange } from '@angular/material/select';
+import { Component, SimpleChanges, ViewChild } from '@angular/core';
+import { MatSelectChange, MatSelect } from '@angular/material/select';
+import { FavoritesService } from '../favorites-service/favorites.service';
 
 @Component({
   selector: 'app-filter-select',
   templateUrl: './filter-select.component.html',
   styleUrls: ['./filter-select.component.scss']
 })
-export class FilterSelectComponent implements OnInit {
+export class FilterSelectComponent {
 
-  @Output() filterChange: EventEmitter<string> = new EventEmitter<string>();
+  public selected = 'all';
+  @ViewChild(MatSelect) input: MatSelect;
 
-  constructor() { }
+  constructor(
+    private favoriteService: FavoritesService
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.input.registerOnChange(filter => this.selectionChange(filter));
   }
 
-  public selectionChange(selection: MatSelectChange) {
-    this.filterChange.emit(selection.value);
+  public selectionChange(selection: string) {
+    this.favoriteService.setFilter(selection);
   }
 
 }
