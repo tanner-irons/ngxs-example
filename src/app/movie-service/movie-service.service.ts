@@ -25,11 +25,12 @@ export class MovieService {
       .then(result => {
         let typedResponse = result as MovieSearchResult;
         if (typedResponse.Response === 'True') {
+          this.movies = typedResponse.Search;
           for (let listener of this.moviesListeners) {
             listener(typedResponse.Search);
           }
-          return typedResponse.Search;
         } else {
+          this.movieError = typedResponse.Error;
           for (let listener of this.movieErrorListeners) {
             listener({
               error: typedResponse.Error
@@ -48,6 +49,14 @@ export class MovieService {
       });
   }
 
+  public getAllMovies(): MovieSummary[] {
+    return this.movies;
+  }
+
+  public getMovieError(): string {
+    return this.movieError;
+  }
+
   public whenMoviesChange(listener: ((movies: MovieSummary[]) => void)) {
     this.moviesListeners.push(listener);
     listener(this.movies);
@@ -58,7 +67,6 @@ export class MovieService {
     listener({ error: this.movieError });
   }
 }
-
 interface MovieSearchResult {
   Search?: MovieSummary[],
   totalResults?: string,
