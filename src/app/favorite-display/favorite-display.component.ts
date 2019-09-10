@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { MovieDetails } from '../movie-service/movie.model';
 import { FavoritesService } from '../favorites-service/favorites.service';
-import { MovieServiceService } from '../movie-service/movie-service.service';
+import { MovieService } from '../movie-service/movie-service.service';
 
 @Component({
   selector: 'app-favorite-display',
@@ -15,7 +15,7 @@ export class FavoriteDisplayComponent implements OnInit {
 
   constructor(
     private favoriteService: FavoritesService,
-    private movieService: MovieServiceService
+    private movieService: MovieService
   ) { }
 
   ngOnInit() {

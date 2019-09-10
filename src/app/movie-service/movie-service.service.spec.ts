@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MovieServiceService } from './movie-service.service';
+import { MovieService } from './movie-service.service';
 
-describe('MovieServiceService', () => {
+describe('MovieService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: MovieServiceService = TestBed.get(MovieServiceService);
+    const service: MovieService = TestBed.get(MovieService);
     expect(service).toBeTruthy();
   });
 });
