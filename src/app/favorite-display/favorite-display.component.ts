@@ -5,9 +5,9 @@ import { Select } from '@ngxs/store';
 import { FavoritesState } from '../favorite-store/states/favorites.state';
 
 @Component({
-    selector: 'app-favorite-display',
-    templateUrl: './favorite-display.component.html',
-    styleUrls: ['./favorite-display.component.scss']
+  selector: 'app-favorite-display',
+  templateUrl: './favorite-display.component.html',
+  styleUrls: ['./favorite-display.component.scss']
 })
 export class FavoriteDisplayComponent implements OnInit {
   @Select(FavoritesState.getFilteredMovies) favoriteMovies$: Observable<MovieDetails[]>;
