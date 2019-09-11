@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MovieDetails } from '../movie-service/movie.model';
 import { Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
@@ -9,6 +9,13 @@ import { FavoritesState } from '../favorite-store/states/favorites.state';
     templateUrl: './favorite-display.component.html',
     styleUrls: ['./favorite-display.component.scss']
 })
-export class FavoriteDisplayComponent {
+export class FavoriteDisplayComponent implements OnInit {
   @Select(FavoritesState.getFilteredMovies) favoriteMovies$: Observable<MovieDetails[]>;
+  public favorites: MovieDetails[];
+
+  ngOnInit(): void { 
+    this.favoriteMovies$.subscribe(favs => {
+      this.favorites = favs;
+    });
+  }
 }
