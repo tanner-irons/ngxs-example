@@ -32,6 +32,10 @@ export class MovieSearchState {
   static getMovieError(state: IMovieSearchStateModel): string {
     return state.movieError;
   }
+  @Selector()
+  static getMovieSearch(state: IMovieSearchStateModel): string {
+    return state.searchText;
+  }
 
   @Action(SetSearchText)
   setSearchText(ctx: StateContext<IMovieSearchStateModel>, { payload }: SetSearchText) {
