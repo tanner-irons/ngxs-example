@@ -3,22 +3,27 @@
     <app-filter-select></app-filter-select>
   </div>
   <div class="cards">
-    <ng-container *ngIf="favorites; else noResults">
-      <mat-card *ngFor="let favorite of favorites">
-        <mat-card-header>
-          <mat-card-title>
-            {{favorite.Title}}
-          </mat-card-title>
-        </mat-card-header>
-        <img mat-card-image [src]="favorite.Poster" />
-        <mat-card-content>
-          <div>{{favorite.Genre}}</div>
-          <div>{{favorite.Year}}</div>
-        </mat-card-content>
-      </mat-card>
+    <ng-container *ngIf="loaded; else loading">
+      <ng-container *ngIf="favorites; else noResults">
+        <mat-card *ngFor="let favorite of favorites">
+          <mat-card-header>
+            <mat-card-title>
+              {{favorite.Title}}
+            </mat-card-title>
+          </mat-card-header>
+          <img mat-card-image [src]="favorite.Poster" />
+          <mat-card-content>
+            <div>{{favorite.Genre}}</div>
+            <div>{{favorite.Year}}</div>
+          </mat-card-content>
+        </mat-card>
+      </ng-container>
+      <ng-template #noResults>
+        No Results
+      </ng-template>
     </ng-container>
-    <ng-template #noResults>
-      No Results
+    <ng-template #loading>
+      Loading
     </ng-template>
   </div>
 </div>

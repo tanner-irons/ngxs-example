@@ -12,10 +12,12 @@ import { FavoritesState } from '../favorite-store/states/favorites.state';
 export class FavoriteDisplayComponent implements OnInit {
   @Select(FavoritesState.getFilteredMovies) favoriteMovies$: Observable<MovieDetails[]>;
   public favorites: MovieDetails[];
+  public loaded: boolean = false;
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.favoriteMovies$.subscribe(favs => {
       this.favorites = favs;
+      this.loaded = true;
     });
   }
 }
