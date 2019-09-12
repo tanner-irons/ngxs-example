@@ -33,19 +33,6 @@ export class FavoritesService {
     });
   }
 
-  public setFilter(filter: string) {
-    this.getFavoriteMovies(Array.from(this.favoriteIds))
-      .pipe(map(x => x.filter(y => {
-        if (filter !== 'all') {
-          return y.Genre.split(',').some(z => z.toLowerCase().trim() === filter)
-        }
-        return y;
-      })))
-      .subscribe(favs => {
-        this.favoriteMovies.next(favs);
-      });
-  }
-
   private getFavoriteMovies(favoriteIds: string[]): Observable<MovieDetails[]> {
     let requestList: Observable<MovieDetails>[] = [];
     for (let id of favoriteIds) {
