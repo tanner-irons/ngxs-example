@@ -13,9 +13,7 @@ export class FavoritesService {
 
   private favoriteIds: Set<string>;
   public favoriteMovies: BehaviorSubject<MovieDetails[]> = new BehaviorSubject<MovieDetails[]>(null);
-  public genreFilter: BehaviorSubject<string> = new BehaviorSubject<string>('all');
   private getMoviesSubscription: Subscription;
-  private filterSubscription: Subscription;
 
   constructor(
     private movieService: MovieService
@@ -23,19 +21,6 @@ export class FavoritesService {
     this.favoriteIds = new Set(JSON.parse(localStorage.getItem('favoriteMovieIds')));
     this.getMoviesSubscription = this.getFavoriteMovies(Array.from(this.favoriteIds.values())).subscribe(favs => {
       this.favoriteMovies.next(favs);
-    });
-    // if there is a filter, filter and emit
-    this.filterSubscription = this.genreFilter.subscribe(filter => {
-      this.getFavoriteMovies(Array.from(this.favoriteIds))
-        .pipe(map(x => x.filter(y => {
-          if (filter !== 'all') {
-            return y.Genre.split(',').some(z => z.toLowerCase().trim() === filter)
-          }
-          return y;
-        })))
-        .subscribe(favs => {
-          this.favoriteMovies.next(favs);
-        });
     });
   }
 
@@ -71,4 +56,7 @@ export class FavoritesService {
     return forkJoin(requestList);
   }
 
+  ngOnDestroy() {
+    // This must be implemented when using Auto-Unsubscribe even if you don't actually do anything here.
+  }
 }
