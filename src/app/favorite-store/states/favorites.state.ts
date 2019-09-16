@@ -71,7 +71,7 @@ export class FavoritesState implements NgxsOnInit {
   }
 
   @Action(SetGenreFilter)
-  SetSelectedSchedule(ctx: StateContext<IFavoritesStateModel>, { payload }: SetGenreFilter) {
+  setGenreFilter(ctx: StateContext<IFavoritesStateModel>, { payload }: SetGenreFilter) {
     ctx.patchState({
       genreFilter: payload
     });
